@@ -4,7 +4,7 @@ $project = 'badge-reprint';
 $pathTo="/Users/Shared/Versions/$project/";
 $fileFrom="$pathTo$project.command";
 
-$version = '-4.2';
+$version = '-4.3';
 use File::Basename ();
 use Term::ANSIColor;
 use DBI;
@@ -314,9 +314,8 @@ while(my $string = <FH>)
 			else
 			{
 				print "Found mismatch. Restarting...\n";
-			
-				system("$dir/Launch_badge_reprint.command $arg1");
-				exit;
+				system("$dir/Launch_badge-reprint.command $arg1");
+				# exit;
 			}
 		}	
 	}
