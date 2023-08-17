@@ -306,6 +306,7 @@ while(my $string = <FH>)
 			$new_ver = substr($string,12,$len_string);
 			print "\nNew version: $new_ver\n";
 			print "Current version: $version\n";
+			print "Latest version: $latestVersion\n";
 			if (($new_ver eq $version) && ($new_ver eq $latestVersion))
 			{
 				print "Found a match. Doing nothing...\n";
