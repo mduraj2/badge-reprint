@@ -4,7 +4,7 @@ $project = 'badge-reprint';
 $pathTo="/Users/Shared/Versions/$project/";
 $fileFrom="$pathTo$project.command";
 
-$version = '-4.1';
+$version = '-4.2';
 use File::Basename ();
 use Term::ANSIColor;
 use DBI;
