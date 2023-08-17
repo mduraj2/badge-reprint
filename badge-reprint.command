@@ -1,7 +1,10 @@
 #!/usr/bin/env perl
 
 $project = 'badge-reprint';
-$version = '-3.3b';
+$pathTo="/Users/Shared/Versions/$project/";
+$fileFrom="$pathTo$project.command";
+
+$version = '-4.0';
 use File::Basename ();
 use Term::ANSIColor;
 use DBI;
@@ -30,6 +33,10 @@ if (system("lpstat -a")) {
 
 system clear;
 
+RESET:
+checkVersion($dbh);
+print "here\n";
+<>;
 print "Enter password: ";
 chomp ($pass = <>);
 $pass = sha256_hex($pass);
@@ -240,6 +247,51 @@ sub handle_error{
 	print color('reset');
 	<>;
 	exit;
+}
+
+sub checkVersion{
+	($dbh) = @_;
+    $sql = "SELECT version FROM general.versions
+	WHERE name='$project'";
+
+    $sth = $dbh->prepare($sql);
+    
+    # execute the query
+    $sth->execute();
+	
+	my $ref;
+    
+    $ref = $sth->fetchall_arrayref([]);
+    if ((0 + @{$ref}) > 0)
+	{
+	 foreach $data (@$ref)
+            {
+                ($latestVersion) = @$data;
+            }
+												if ($version ne $latestVersion){
+													downloadLatest();
+													check_version();
+												}
+	} else {
+		print color('bold red');
+    	print "No version specified in db\n";
+		print color('reset');
+		print "#################################################\n";
+		print "Press Enter to continue...";
+		<>;
+    	goto RESET;
+	}
+	
+    $sth->finish;
+}
+
+sub downloadLatest{
+	$passwordToCopy = 'apple';
+	$userToCopy = 'apple';
+	$IPAddressToCopy = '172.30.1.199';
+
+	system `sshpass -p '$passwordToCopy' scp $userToCopy\@$IPAddressToCopy:$fileFrom $pathTo`;
+
 }
 
 sub check_version{
