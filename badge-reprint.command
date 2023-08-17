@@ -4,7 +4,7 @@ $project = 'badge-reprint';
 $pathTo="/Users/Shared/Versions/$project/";
 $fileFrom="$pathTo$project.command";
 
-$version = '-4.0';
+$version = '-4.1';
 use File::Basename ();
 use Term::ANSIColor;
 use DBI;
@@ -35,8 +35,6 @@ system clear;
 
 RESET:
 checkVersion($dbh);
-print "here\n";
-<>;
 print "Enter password: ";
 chomp ($pass = <>);
 $pass = sha256_hex($pass);
@@ -295,7 +293,7 @@ sub downloadLatest{
 }
 
 sub check_version{
-my $file = "/Users/Shared/badge-reprint.command";
+my $file = "$dir/badge-reprint.command";
 
 open(FH, $file) or die $!;
 
@@ -316,7 +314,7 @@ while(my $string = <FH>)
 			{
 				print "Found mismatch. Restarting...\n";
 			
-				system("/Users/Shared/Launch_badge_reprint.command $arg1");
+				system("$dir/Launch_badge_reprint.command $arg1");
 				exit;
 			}
 		}	
